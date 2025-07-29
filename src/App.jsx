@@ -1,240 +1,138 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-export default function FirstGigLanding() {
-    const [faqOpen, setFaqOpen] = useState(null);
-    const [formData, setFormData] = useState({ firstName: "", email: "" });
-    const [formStatus, setFormStatus] = useState(null); // null | "success" | "error"
+export default function FirstGigLandingPage() {
+    const [form, setForm] = useState({ name: "", email: "" });
+    const [submitted, setSubmitted] = useState(false);
 
-    const faqs = [
-        {
-            q: "Do I have to work for free?",
-            a: "Yes. You help startups for free to learn new skills and get experience.",
-        },
-        {
-            q: "What kind of work will I do?",
-            a: "You might help with social media, design, coding, or other tasks.",
-        },
-        {
-            q: "Do I need experience?",
-            a: "No! This is for beginners who want to try something new.",
-        },
-        {
-            q: "How do startups know I’m serious?",
-            a: "You make a profile with your skills. Startups look at it and pick who to work with.",
-        },
-        {
-            q: "Is this safe?",
-            a: "Yes. We check the startups and give you safety tips.",
-        },
-    ];
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
-    function handleInputChange(e) {
-        const { name, value } = e.target;
-        setFormData((f) => ({ ...f, [name]: value }));
-    }
-
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Simple validation
-        if (!formData.firstName.trim() || !formData.email.trim()) {
-            setFormStatus("error");
-            return;
+        if (form.name && form.email) {
+            setSubmitted(true);
         }
-
-        // Send to API Gateway (placeholder URL)
-        fetch("https://fmlcx5shx6.execute-api.us-east-1.amazonaws.com/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                firstName: formData.firstName.trim(),
-                email: formData.email.trim()
-            })
-        })
-            .then(async (res) => {
-                if (!res.ok) {
-                    throw new Error("API error");
-                }
-                return res.json();
-            })
-            .then(() => {
-                setFormStatus("success");
-                setFormData({ firstName: "", email: "" });
-            })
-            .catch((err) => {
-                console.error("Submission error:", err);
-                setFormStatus("error");
-            });
-    }
+    };
 
     return (
-        <div className="font-sans text-gray-900 bg-white min-h-screen">
-            {/* Above the fold */}
-            <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-                <div className="max-w-6xl mx-auto px-6 py-20 flex flex-col items-center text-center">
-                    <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight max-w-3xl">
-                        Get Your First Job and Learn New Skills!
-                    </h1>
-                    <p className="mt-6 text-lg max-w-xl">
-                        FirstGig helps kids like you find fun jobs with small companies. You can help, learn, and get ready for the future. All for free!
-                    </p>
-
-                    {/* Waitlist form */}
-                    <form
-                        onSubmit={handleSubmit}
-                        className="mt-8 w-full max-w-md bg-white rounded-lg p-6 shadow-lg"
-                    >
-                        <label className="block text-gray-700 font-semibold mb-2" htmlFor="firstName">
-                            First Name
-                        </label>
-                        <input
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            value={formData.firstName}
-                            onChange={handleInputChange}
-                            placeholder="Your first name"
-                            className="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        />
-
-                        <label className="block text-gray-700 font-semibold mb-2" htmlFor="email">
-                            Email Address
-                        </label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            placeholder="you@example.com"
-                            className="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        />
-
-                        <button
-                            type="submit"
-                            className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3 rounded transition"
-                        >
-                            Join the Waitlist
-                        </button>
-
-                        {formStatus === "error" && (
-                            <p className="mt-4 text-red-600 font-semibold">
-                                Please fill out both your first name and email.
-                            </p>
-                        )}
-                        {formStatus === "success" && (
-                            <p className="mt-4 text-green-600 font-semibold">
-                                Thanks for joining the waitlist!
-                            </p>
-                        )}
-                    </form>
-                </div>
+        <div className="min-h-screen bg-gradient-to-br from-purple-800 via-indigo-900 to-black text-white font-sans">
+            <header className="text-center py-20 px-6">
+                <motion.h1
+                    className="text-5xl md:text-6xl font-bold mb-6"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    Your First Internship Starts Here
+                </motion.h1>
+                <motion.p
+                    className="text-xl text-gray-300 max-w-2xl mx-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                >
+                    FirstGig helps high school students like you find unpaid internships with small companies. Learn real-world skills, explore career paths, and get ready for your future. All for free!
+                </motion.p>
             </header>
 
-            {/* Below the fold */}
-            <main className="max-w-6xl mx-auto px-6 py-16 space-y-24">
-                {/* Problem */}
-                <section id="problem" className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold mb-6">The Problem: Hard to Find Your First Job</h2>
-                    <p className="text-lg leading-relaxed text-gray-700">
-                        You want to work and learn new things, but it’s hard to find a job when you don’t have any experience yet.
-                    </p>
-                </section>
-
-                {/* How we solve it */}
-                <section
-                    id="how-we-solve-it"
-                    className="bg-indigo-50 rounded-xl p-12 max-w-5xl mx-auto text-center shadow"
-                >
-                    <h2 className="text-3xl font-bold mb-8 text-indigo-700">
-                        How We Help
-                    </h2>
-                    <p className="text-lg leading-relaxed max-w-3xl mx-auto mb-6">
-                        We help you find small companies who want your help for free. You get to learn and help them with fun tasks.
-                    </p>
-                    <p className="text-lg font-semibold text-indigo-900">
-                        No tricks, just a way to get your first job and learn new skills.
-                    </p>
-                </section>
-
-                {/* What we do */}
-                <section id="what-we-do" className="max-w-5xl mx-auto space-y-8">
-                    <h2 className="text-3xl font-bold text-center">What We Do</h2>
-                    <div className="space-y-6 text-gray-800 text-lg">
-                        <p>
-                            1. <strong>Make a Profile:</strong> Tell us your name, what you like, and what you can do.
-                        </p>
-                        <p>
-                            2. <strong>Look at Companies:</strong> See who needs help with things like social media, art, or coding.
-                        </p>
-                        <p>
-                            3. <strong>Apply:</strong> Ask to work with a company you like.
-                        </p>
-                        <p>
-                            4. <strong>Work and Learn:</strong> Help with projects and learn new things.
-                        </p>
-                        <p>
-                            5. <strong>Keep Going:</strong> Do more jobs to get better and stronger.
-                        </p>
+            <section className="flex flex-col items-center py-14">
+                <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-md w-11/12 md:w-1/2 lg:w-1/3 shadow-lg space-y-6 text-black">
+                    <h2 className="text-2xl font-bold text-white">Join the Waitlist</h2>
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-semibold mb-1 text-white">First Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-white text-black border-gray-20000 border placeholder-gray-400 focus:outline-none"
+                        />
                     </div>
-                </section>
-
-                {/* FAQ */}
-                <section id="faq" className="max-w-5xl mx-auto">
-                    <h2 className="text-3xl font-bold text-center mb-10">Questions You Might Have</h2>
-                    <div className="space-y-4">
-                        {faqs.map((faq, i) => (
-                            <div key={i} className="border border-gray-300 rounded-lg">
-                                <button
-                                    onClick={() => setFaqOpen(faqOpen === i ? null : i)}
-                                    className="w-full text-left px-6 py-4 focus:outline-none flex justify-between items-center"
-                                    aria-expanded={faqOpen === i}
-                                >
-                                    <span className="font-semibold">{faq.q}</span>
-                                    <span className="text-indigo-700 font-bold text-xl">
-                    {faqOpen === i ? "-" : "+"}
-                  </span>
-                                </button>
-                                {faqOpen === i && (
-                                    <div className="px-6 pb-4 pt-4 text-gray-700 border-t border-gray-300">
-                                        {faq.a}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-semibold mb-1 text-white">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-white text-black placeholder-gray-400 focus:outline-none"
+                        />
                     </div>
-                </section>
+                    <button
+                        type="submit"
+                        className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded text-white font-semibold transition duration-300"
+                    >
+                        Join the Waitlist
+                    </button>
+                    {submitted && <p className="mt-4 text-green-300">Thanks for joining the waitlist!</p>}
+                </form>
+            </section>
 
-                {/* Why we aren't a scam */}
-                <section
-                    id="trust"
-                    className="bg-indigo-100 rounded-xl p-12 max-w-5xl mx-auto text-center shadow"
-                >
-                    <h2 className="text-3xl font-bold mb-6 text-indigo-900">Why FirstGig Is Different</h2>
-                    <p className="text-lg max-w-3xl mx-auto leading-relaxed text-gray-800">
-                        You might wonder why you can find these cool chances here and not on big sites like LinkedIn.
-                    </p>
-                    <ul className="mt-6 max-w-3xl mx-auto text-left list-disc list-inside space-y-3 text-gray-700">
-                        <li>
-                            <strong>We focus on students like you:</strong> Big sites want people with lots of experience. We help beginners get started.
-                        </li>
-                        <li>
-                            <strong>We work with small companies:</strong> Startups need help but don’t have money to pay. We connect you with them.
-                        </li>
-                        <li>
-                            <strong>We keep it safe and simple:</strong> We check startups before they join and help you stay safe.
-                        </li>
-                        <li>
-                            <strong>We build trust:</strong> You can rate and talk about your experience so others know who to trust.
-                        </li>
+            <motion.section className="px-6 py-20 max-w-6xl mx-auto space-y-14"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 1 }}
+                            viewport={{ once: true }}>
+
+                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
+                            whileHover={{ scale: 1.03 }}>
+                    <h2 className="text-3xl font-bold mb-3">The Problem: Gaining Experience is Hard</h2>
+                    <p>You want to explore careers and build skills, but getting your first internship without experience is tough. We make it easier.</p>
+                </motion.div>
+
+                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
+                            whileHover={{ scale: 1.03 }}>
+                    <h2 className="text-3xl font-bold mb-3">How We Help</h2>
+                    <p>We connect high school students with small companies offering unpaid internships. You’ll gain valuable experience, build your resume, and learn practical skills in a safe environment.</p>
+                </motion.div>
+
+                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
+                            whileHover={{ scale: 1.03 }}>
+                    <h2 className="text-3xl font-bold mb-4">What You’ll Do</h2>
+                    <ul className="list-disc list-inside space-y-2">
+                        <li>Create a profile: Tell us your interests and skills.</li>
+                        <li>Explore internships: Discover opportunities in social media, design, coding, and more.</li>
+                        <li>Apply: Reach out to startups that interest you.</li>
+                        <li>Intern and learn: Get hands-on experience and build real-world skills.</li>
+                        <li>Grow: Continue building your portfolio and confidence.</li>
                     </ul>
-                    <p className="mt-8 italic text-gray-600 max-w-2xl mx-auto">
-                        FirstGig is a place made just for you to learn, help, and grow in a way big sites just don’t do.
-                    </p>
-                </section>
-            </main>
+                </motion.div>
+
+                <motion.div className="space-y-4">
+                    <h2 className="text-3xl font-bold mb-4">Questions You Might Have</h2>
+                    {[
+                        ["Are these internships paid?", "No. These are unpaid internships designed to help you gain experience and learn."],
+                        ["What kind of work can I do?", "Tasks might include social media, research, design, coding, writing, and more."],
+                        ["Do I need any experience?", "No experience needed. These roles are built for beginners ready to learn."],
+                        ["How will companies know I'm serious?", "You'll build a profile that shows your interests and commitment."],
+                        ["Is this safe?", "Yes. We screen startups and provide safety guidance throughout the process."]
+                    ].map(([q, a], idx) => (
+                        <details key={idx} className="bg-white p-4 rounded-lg hover:shadow-md transition duration-300 text-black">
+                            <summary className="cursor-pointer font-semibold">{q}</summary>
+                            <p className="mt-2">{a}</p>
+                        </details>
+                    ))}
+                </motion.div>
+
+                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
+                            whileHover={{ scale: 1.03 }}>
+                    <h2 className="text-3xl font-bold mb-4">Why FirstGig Is Different</h2>
+                    <ul className="space-y-2 list-disc list-inside">
+                        <li>Designed for high schoolers: Big platforms ignore beginners. We’re made just for you.</li>
+                        <li>Real experience, no pressure: Learn in a safe space while helping real businesses.</li>
+                        <li>Simple and safe: We pre-check companies and guide you every step of the way.</li>
+                        <li>Trusted community: Share feedback and learn from others like you.</li>
+                    </ul>
+                </motion.div>
+            </motion.section>
+
+            <footer className="text-center py-10 text-gray-400 text-sm">
+                © {new Date().getFullYear()} FirstGig. All rights reserved.
+            </footer>
         </div>
     );
 }
