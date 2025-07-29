@@ -68,7 +68,7 @@ export default function FirstGigLandingPage() {
                 </motion.p>
             </header>
 
-            <section className="flex flex-col items-center py-14">
+            <section className="flex flex-col items-center">
                 <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-md w-11/12 md:w-1/2 lg:w-1/3 shadow-lg space-y-6 text-black">
                     <h2 className="text-2xl font-bold text-black">Join the Waitlist</h2>
                     {/* Show error or success message based on formStatus */}
