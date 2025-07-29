@@ -5,17 +5,47 @@ import Card from "./components/Card";
 export default function FirstGigLandingPage() {
     const [form, setForm] = useState({ name: "", email: "" });
     const [submitted, setSubmitted] = useState(false);
+    const [formStatus, setFormStatus] = useState("");
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
-        if (form.name && form.email) {
-            setSubmitted(true);
+
+        // Simple validation
+        if (!form.name.trim() || !form.email.trim()) {
+            setFormStatus("error");
+            return;
         }
-    };
+
+        // Send to API Gateway (placeholder URL)
+        fetch("https://fmlcx5shx6.execute-api.us-east-1.amazonaws.com/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: form.name.trim(),
+                email: form.email.trim()
+            })
+        })
+            .then(async (res) => {
+                if (!res.ok) {
+                    throw new Error("API error");
+                }
+                return res.json();
+            })
+            .then(() => {
+                setFormStatus("success");
+                setForm({ name: "", email: "" });
+            })
+            .catch((err) => {
+                console.error("Submission error:", err);
+                setFormStatus("error");
+            });
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-800 via-indigo-900 to-black text-white font-sans">
@@ -41,6 +71,13 @@ export default function FirstGigLandingPage() {
             <section className="flex flex-col items-center py-14">
                 <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-md w-11/12 md:w-1/2 lg:w-1/3 shadow-lg space-y-6 text-black">
                     <h2 className="text-2xl font-bold text-black">Join the Waitlist</h2>
+                    {/* Show error or success message based on formStatus */}
+                    {formStatus === "error" && (
+                        <div className="text-red-600 bg-red-100 rounded p-2 mb-2 text-center">Please enter both your name and email.</div>
+                    )}
+                    {formStatus === "success" && (
+                        <div className="text-green-700 bg-green-100 rounded p-2 mb-2 text-center">Thanks for joining the waitlist!</div>
+                    )}
                     <div>
                         <label htmlFor="name" className="block text-sm font-semibold mb-1 text-black">First Name</label>
                         <input
@@ -69,7 +106,6 @@ export default function FirstGigLandingPage() {
                     >
                         Join the Waitlist
                     </button>
-                    {submitted && <p className="mt-4 text-green-300">Thanks for joining the waitlist!</p>}
                 </form>
             </section>
 
