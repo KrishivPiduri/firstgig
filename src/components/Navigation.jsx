@@ -15,7 +15,7 @@ export default function Navigation() {
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
         <SignedOut>
-          <SignInButton mode="modal">
+          <SignInButton mode="modal" signUpForceRedirectUrl='/profileform'>
             <button className="bg-purple-700 text-white px-4 py-2 rounded font-semibold hover:bg-purple-800 transition">Sign In</button>
           </SignInButton>
         </SignedOut>

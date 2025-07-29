@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FirstGigLandingPage from "./App";
 import MVPPage from "./components/MVPPage";
 import { ClerkProvider } from '@clerk/clerk-react'
+import CompleteProfile from "./CompleteProfileForm.jsx";
 // Import your Publishable Key
 const PUBLISHABLE_KEY = "pk_test_Z2FtZS13aWxkY2F0LTguY2xlcmsuYWNjb3VudHMuZGV2JA"
 
@@ -20,8 +21,9 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             <Route path="/" element={<FirstGigLandingPage />} />
             <Route path="/mvp" element={<MVPPage />} />
+              <Route path="/profileform" element={<CompleteProfile />} />
           </Routes>
-        </BrowserRouter>
-      </ClerkProvider>
+        </ClerkProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
