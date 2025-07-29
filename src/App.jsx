@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Card from "./components/Card";
 
 export default function FirstGigLandingPage() {
     const [form, setForm] = useState({ name: "", email: "" });
@@ -90,16 +91,39 @@ export default function FirstGigLandingPage() {
                     <p>We connect high school students with small companies offering unpaid internships. You’ll gain valuable experience, build your resume, and learn practical skills in a safe environment.</p>
                 </motion.div>
 
-                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
-                            whileHover={{ scale: 1.03 }}>
+                <motion.div>
                     <h2 className="text-3xl font-bold mb-4">What You’ll Do</h2>
-                    <ul className="list-disc list-inside space-y-2">
-                        <li>Create a profile: Tell us your interests and skills.</li>
-                        <li>Explore internships: Discover opportunities in social media, design, coding, and more.</li>
-                        <li>Apply: Reach out to startups that interest you.</li>
-                        <li>Intern and learn: Get hands-on experience and build real-world skills.</li>
-                        <li>Grow: Continue building your portfolio and confidence.</li>
-                    </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                title: "Create a profile",
+                                desc: "Tell us your interests and skills."
+                            },
+                            {
+                                title: "Explore internships",
+                                desc: "Discover opportunities in social media, design, coding, and more."
+                            },
+                            {
+                                title: "Apply",
+                                desc: "Reach out to startups that interest you."
+                            },
+                            {
+                                title: "Intern and learn",
+                                desc: "Get hands-on experience and build real-world skills."
+                            },
+                            {
+                                title: "Grow",
+                                desc: "Continue building your portfolio and confidence."
+                            }
+                        ].map((item, idx) => (
+                            <motion.div key={idx} whileHover={{ scale: 1.05 }}>
+                                <Card className="text-black">
+                                    <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                                    <p>{item.desc}</p>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </div>
                 </motion.div>
 
                 <motion.div className="space-y-4">
@@ -118,15 +142,22 @@ export default function FirstGigLandingPage() {
                     ))}
                 </motion.div>
 
-                <motion.div className="bg-white p-6 rounded-xl hover:shadow-lg transition duration-300 shadow-md text-black"
-                            whileHover={{ scale: 1.03 }}>
+                <motion.div>
                     <h2 className="text-3xl font-bold mb-4">Why FirstGig Is Different</h2>
-                    <ul className="space-y-2 list-disc list-inside">
-                        <li>Designed for high schoolers: Big platforms ignore beginners. We’re made just for you.</li>
-                        <li>Real experience, no pressure: Learn in a safe space while helping real businesses.</li>
-                        <li>Simple and safe: We pre-check companies and guide you every step of the way.</li>
-                        <li>Trusted community: Share feedback and learn from others like you.</li>
-                    </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            "Designed for high schoolers: Big platforms ignore beginners. We’re made just for you.",
+                            "Real experience, no pressure: Learn in a safe space while helping real businesses.",
+                            "Simple and safe: We pre-check companies and guide you every step of the way.",
+                            "Trusted community: Share feedback and learn from others like you."
+                        ].map((text, idx) => (
+                            <motion.div key={idx} whileHover={{ scale: 1.05 }}>
+                                <Card className="text-black">
+                                    <p>{text}</p>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </div>
                 </motion.div>
             </motion.section>
 
