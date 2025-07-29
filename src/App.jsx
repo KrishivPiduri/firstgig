@@ -39,27 +39,27 @@ export default function FirstGigLandingPage() {
 
             <section className="flex flex-col items-center py-14">
                 <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-md w-11/12 md:w-1/2 lg:w-1/3 shadow-lg space-y-6 text-black">
-                    <h2 className="text-2xl font-bold text-white">Join the Waitlist</h2>
+                    <h2 className="text-2xl font-bold text-black">Join the Waitlist</h2>
                     <div>
-                        <label htmlFor="name" className="block text-sm font-semibold mb-1 text-white">First Name</label>
+                        <label htmlFor="name" className="block text-sm font-semibold mb-1 text-black">First Name</label>
                         <input
                             id="name"
                             type="text"
                             name="name"
                             value={form.name}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-white text-black border-gray-20000 border placeholder-gray-400 focus:outline-none"
+                            className="w-full p-2 rounded bg-white text-black border-gray-300 border placeholder-gray-400 focus:outline-none"
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-sm font-semibold mb-1 text-white">Email Address</label>
+                        <label htmlFor="email" className="block text-sm font-semibold mb-1 text-black">Email Address</label>
                         <input
                             id="email"
                             type="email"
                             name="email"
                             value={form.email}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-white text-black placeholder-gray-400 focus:outline-none"
+                            className="w-full p-2 rounded bg-white text-black placeholder-gray-400 focus:outline-none border border-gray-300"
                         />
                     </div>
                     <button
