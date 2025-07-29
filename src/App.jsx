@@ -144,16 +144,24 @@ export default function FirstGigLandingPage() {
 
                 <motion.div>
                     <h2 className="text-3xl font-bold mb-4">Why FirstGig Is Different</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                         {[
-                            "Designed for high schoolers: Big platforms ignore beginners. We’re made just for you.",
-                            "Real experience, no pressure: Learn in a safe space while helping real businesses.",
-                            "Simple and safe: We pre-check companies and guide you every step of the way.",
-                            "Trusted community: Share feedback and learn from others like you."
-                        ].map((text, idx) => (
-                            <motion.div key={idx} whileHover={{ scale: 1.05 }}>
-                                <Card className="text-black">
-                                    <p>{text}</p>
+                            {
+                                content: <><span className="font-bold">Designed for high schoolers:</span> Big platforms ignore beginners. We’re made just for you.</>,
+                            },
+                            {
+                                content: <><span className="font-bold">Real experience, no pressure:</span> Learn in a <span className="italic">safe space</span> while helping real businesses.</>,
+                            },
+                            {
+                                content: <><span className="font-bold">Simple and safe:</span> We <span className="underline">pre-check companies</span> and guide you every step of the way.</>,
+                            },
+                            {
+                                content: <><span className="font-bold">Trusted community:</span> <span className="text-purple-700">Share feedback</span> and learn from others like you.</>,
+                            },
+                        ].map((item, idx) => (
+                            <motion.div key={idx} whileHover={{ scale: 1.05 }} className="h-full">
+                                <Card className="text-black h-full flex flex-col justify-center">
+                                    <p className="text-base md:text-lg">{item.content}</p>
                                 </Card>
                             </motion.div>
                         ))}
