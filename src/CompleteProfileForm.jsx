@@ -1,10 +1,9 @@
-import { useUser, useClerk } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function CompleteProfile() {
     const { user } = useUser();
-    const { client } = useClerk();
     const navigate=useNavigate()
 
     const [canCode, setCanCode] = useState(false);
@@ -32,11 +31,6 @@ export default function CompleteProfile() {
                 metadata: profileData,
             }),
         });
-
-        // Optionally update Clerk metadata as before
-        await user.setPublicMetadata(profileData);
-
-
         navigate('/mvp')
     };
 
